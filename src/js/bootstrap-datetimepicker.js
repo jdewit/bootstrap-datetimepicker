@@ -58,8 +58,9 @@ angular.module('ez.datetimepicker', [])
 .directive('ezDatetimepicker', ['EzDatetimepickerConfig', function(EzDatetimepickerConfig) {
   return {
     restrict: 'EA',
+    require:'?ngModel',
     compile: function() {
-      return function(scope, element) {
+      return function(scope, element, attrs) {
         if (typeof moment === 'undefined') {
           throw new Error('momentjs is required');
         };
@@ -74,9 +75,9 @@ angular.module('ez.datetimepicker', [])
 
             var icon = false, i, dDate, longDateFormat;
 
-            picker.options = EzDatetimepickerConfig; //$.extend({}, options);
+            picker.options = $.extend(true, {}, EzDatetimepickerConfig, scope.$eval(attrs.config));
 
-            picker.element = $(element);
+            picker.element = element;
 
             if (!(picker.options.pickTime || picker.options.pickDate))
                 throw new Error('Must choose at least one picker');
@@ -700,8 +701,8 @@ angular.module('ez.datetimepicker', [])
                     if (expanded && expanded.length) {
                         collapseData = expanded.data('collapse');
                         if (collapseData && collapseData.date - transitioning) return;
-                        expanded.collapse('hide');
-                        closed.collapse('show');
+                        expanded.hide().removeClass('in');
+                        closed.show().addClass('in');
                         $this.find('span').toggleClass(picker.options.icons.time + ' ' + picker.options.icons.date);
                         picker.element.find('.input-group-addon span').toggleClass(picker.options.icons.time + ' ' + picker.options.icons.date);
                     }
