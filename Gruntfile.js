@@ -45,7 +45,7 @@ module.exports = function(grunt) {
           yuicompress: true
         },
         files: {
-          "dist/ez-datetimepicker.min.css": "src/ez-datetimepicker.less"
+          "dist/css/ez-datetimepicker.min.css": "src/less/*.less"
         }
       }
     },
@@ -73,7 +73,7 @@ module.exports = function(grunt) {
     },
     watch: {
       all: {
-        files: ['Gruntfile.js', 'src/js/*.js', 'test/*Spec.js'],
+        files: ['Gruntfile.js', 'src/**/*', 'test/*Spec.js'],
         tasks: ['default', 'karma:unit:run'],
         options: {
           livereload: 1676,
